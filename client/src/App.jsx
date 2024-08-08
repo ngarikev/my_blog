@@ -19,7 +19,7 @@ function App() {
           <Route path="/tech" element={ <TechBlogs />} />
           <Route path="/others" element={ <OtherBlogs />} />
           <Route path="/create-blog" element={ <CreateBlog />} />
-          <Route path="/viewblog" element={ <ViewBlog />} />
+          <Route path="/view/:id" element={ <ViewBlog />} />
         </Routes>
       </Router>
        

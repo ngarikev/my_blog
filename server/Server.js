@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
   res.send('Hey there am learning nodejs')
 });
 
+/////////creates a new blog
 app.post('/create-blog', upload.single('image'), async (req, res) => {
 
   console.log('Request received to /create-blog');
@@ -49,6 +50,7 @@ app.post('/create-blog', upload.single('image'), async (req, res) => {
   }
 });
 
+///////get all blogs
 app.get('/blogs', async(req, res) =>{
   try {
     const blogs = await blogPost.find() .sort( { createdAt: -1 })
@@ -59,6 +61,7 @@ app.get('/blogs', async(req, res) =>{
   }
 })
 
+/////// get blog under category
 app.get('/blogs/:category', async(req, res) =>{
 
   const { category } = req.params
@@ -71,6 +74,22 @@ app.get('/blogs/:category', async(req, res) =>{
   }
 })
 
+////////gets blog by id
+
+app.get('/blogs/view/:id', async(req, res) =>{
+  const { id } = req.params
+
+  try {
+    const blog = await blogPost.findById(id)
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    res.status(200).json(blog)
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
 
 const port = process.env.PORT;
 
