@@ -3,6 +3,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'
 
 const modules = {
   toolbar: [
@@ -42,7 +43,6 @@ function CreateBlog() {
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
-
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +58,7 @@ function CreateBlog() {
           "Content-Type": "multipart/form-data",
         },
       });
+
       console.log(BlogData);
       alert('submitted successfuly')
     } catch (error) {

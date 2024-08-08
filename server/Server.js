@@ -59,6 +59,19 @@ app.get('/blogs', async(req, res) =>{
   }
 })
 
+app.get('/blogs/:category', async(req, res) =>{
+
+  const { category } = req.params
+  try {
+    const blogs = await blogPost.find({ category }) .sort({createdAt: -1});
+    res.status(200).json(blogs)
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
+
+
 const port = process.env.PORT;
 
 app.listen(port, () => {
