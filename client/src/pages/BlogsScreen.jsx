@@ -19,12 +19,15 @@ function HomeScreen() {
   }, []);
   return (
     <>
-      <Container>
+    <main>
+       <Container >
         <Row className="my-5">
           {blogs.length > 0 &&
             blogs.map((blog) => <Blog key={blog._id} {...blog} />)}
         </Row>
       </Container>
+    </main>
+     
     </>
   );
 }

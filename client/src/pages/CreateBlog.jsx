@@ -100,7 +100,7 @@ function CreateBlog() {
           ref={quillRef}
           modules={modules}
           formats={formats}
-          className="mb-3"
+          className="mb-3 bg-white text-body"
           value={content}
           onChange={setContent}
         />

@@ -4,10 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { CiClock2 } from "react-icons/ci";
 import { SlLike } from "react-icons/sl";
 import { GoComment } from "react-icons/go";
-import TimeAgo from "react-timeago"
-
-
-
+import TimeAgo from "react-timeago";
 
 function Blog({ title, content, image, createdAt }) {
   return (
@@ -21,17 +18,21 @@ function Blog({ title, content, image, createdAt }) {
           />
         </div>
         <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center">
-            <h4>{title}</h4>
+          <div className="d-flex justify-content-between mx-auto text-white">
             <time className="ms-auto">
               <CiClock2 />
               <small className="small ms-1">
-                <TimeAgo date={ new Date(createdAt) } />
+                <TimeAgo date={new Date(createdAt)} />
               </small>
             </time>
           </div>
-          <p dangerouslySetInnerHTML={{ __html: content }}></p>
-          <div className="d-flex justify-content-between me-3">
+          <h4>{title}</h4>
+
+          <p
+            dangerouslySetInnerHTML={{ __html: content }}
+            className="text-white"
+          ></p>
+          <div className="d-flex justify-content-between me-3 text-white mb-5">
             <div className="Icons">
               <SlLike />
               <span> 0 </span>
