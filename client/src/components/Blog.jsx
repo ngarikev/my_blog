@@ -12,7 +12,7 @@ function Blog({ _id, title, content, image, createdAt }) {
     <>
       <Col lg={4} md={6} sm={12}>
         <div className="card">
-        <Link to={`/view/${_id}`}>
+        <Link className="text-decoration-none" to={`/view/${_id}`} >
         <img
             className="img-fluid"
             src={`data:image/jpeg;base64,${image}`}
@@ -29,7 +29,7 @@ function Blog({ _id, title, content, image, createdAt }) {
               </small>
             </time>
           </div>
-          <Link to={`/view/${_id}`}>
+          <Link className="text-decoration-none " to={`/view/${_id}`}>
           <h4>{title}</h4>
           </Link>
 

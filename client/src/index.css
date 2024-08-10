@@ -44,6 +44,8 @@ body{
 }
 .card-body h4{
   margin-top: 10px;
+  color: #FFD700 !important;
+  font-weight: 800;
 }
 .Icons{
   cursor: pointer;
@@ -64,6 +66,14 @@ width: 80%;
   background-color: #e6c200;
   color: #111;
 }
-
-
+/*******view page********/
+.view-blog{
+  border: 1px solid #FFD700;
+}
+.comment{
+  font-size: 12px;
+}
+.comment-form{
+  border: 1px solid #FFD700;
+}
 
