@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ function Login() {
   return (
     <>
     <main>
-        <Container className="d-flex justify-content-center container ">
+        <Container className="d-flex justify-content-center login ">
           <h4 className="text-center d-flex mb-3">My blog</h4>
           <Form onSubmit={handleLogin} className="form p-5 w-100">
             <h5 className="text-center">Login</h5>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
@@ -26,7 +26,7 @@ const handleRegister = async(e) => {
   return (
     <>
       <main>
-        <Container className="d-flex justify-content-center container ">
+        <Container className="d-flex justify-content-center register ">
           <h4 className="text-center d-flex mb-3">My blog</h4>
           <Form onSubmit={handleRegister} className="form p-5 w-100">
             <h5 className="text-center">Register</h5>

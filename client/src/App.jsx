@@ -5,6 +5,8 @@ import TechBlogs from "./pages/TechBlogs"
 import CreateBlog from "./pages/CreateBlog"
 import OtherBlogs from "./pages/OtherBlogs"
 import ViewBlog from "./pages/ViewBlog"
+import Register from "./pages/Register"
+import Login from "./pages/Login"
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
           <Route path="/" element={ <BlogsSreen />} />
           <Route path="/tech" element={ <TechBlogs />} />
           <Route path="/others" element={ <OtherBlogs />} />
+          <Route path="/register" element={ <Register />} />
+          <Route path="/login" element={ <Login />} />
           <Route path="/create-blog" element={ <CreateBlog />} />
           <Route path="/view/:id" element={ <ViewBlog />} />
         </Routes>
