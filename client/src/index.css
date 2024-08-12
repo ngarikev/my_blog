@@ -78,3 +78,28 @@ width: 80%;
 }
 
 /*********login and register forms********/
+
+.login, .register{
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form{
+  max-width: 600px;
+  border-radius: 8px;
+  background-color: #f5b2b42b;
+  box-shadow: 0 5px 10px #0000004d;
+}
+
+@media screen and (max-width: 960px) {
+  .row{
+    display: flex;
+    flex-direction: column;
+  }
+  .last-name{
+    margin-top: 1rem !important;
+  }
+
+  
+}
