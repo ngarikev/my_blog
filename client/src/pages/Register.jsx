@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
 
@@ -8,10 +8,18 @@ const[fname, setFname] = useState('');
 const[lname, setLname] = useState('');
 const[email, setEmail] = useState('');
 const[password, setPassword] = useState('');
+const navigate = useNavigate();
 
 
 const handleRegister = async(e) => {
   e.preventDefault();
+
+  try {
+    
+    navigate('/login')
+  } catch (error) {
+    
+  }
 }
 
 
@@ -76,7 +84,7 @@ const handleRegister = async(e) => {
             <p className="mt-3 text-success">
               Already have an account?
               <Link className="ms-2" to="/login">
-                Signin here
+                Login here
               </Link>
             </p>
           </Form>
