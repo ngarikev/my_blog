@@ -41,7 +41,7 @@ function ViewBlog() {
         <div className="d-flex flex-column align-items-center view-blog py-3 rounded">
           <h1 className="text-center">{blog.title}</h1>
           <img
-            className="img-fluid my-4"
+            className="img-fluid my-4 px-3 "
             src={`data:image/jpeg;base64,${blog.image}`}
             alt={blog.title}
             style={{ maxWidth: "600px", width: "100%" }}

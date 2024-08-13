@@ -1,27 +1,34 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-const[fname, setFname] = useState('');
-const[lname, setLname] = useState('');
-const[email, setEmail] = useState('');
-const[password, setPassword] = useState('');
-const navigate = useNavigate();
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-
-const handleRegister = async(e) => {
-  e.preventDefault();
-
-  try {
+    const username = `${fname} ${lname}`; 
     
-    navigate('/login')
-  } catch (error) {
+    try {
+      const response = await axios.post("http://localhost:5000/register", {
+      username,
+      email,
+      password,
+    });
+    console.log(response);
     
-  }
-}
-
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      
+    }
+  };
 
   return (
     <>

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,11 +13,15 @@ function Login() {
   const handleLogin = async(e) =>{
     e.preventDefault();
     try {
+      const response = await axios.post('http://localhost:5000/login', {
+        email,
+        password
+      })
+      console.log(response);
       
-
       navigate('/')
     } catch (error) {
-      
+      console.log(error)
     }
   }
 

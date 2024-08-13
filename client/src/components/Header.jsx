@@ -3,8 +3,10 @@ import {
   Nav,
   Navbar,
   Container,
+  Dropdown,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
 
 const Header = () => {
   return (
@@ -30,6 +32,19 @@ const Header = () => {
             <Nav>
               <Link className="text-decoration-none m-3 nav_link" to="/create-blog">Create Blog</Link>
             </Nav>
+            <Nav>
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="link" id="user-dropdown" className="nav-link text-decoration-none m-3">
+                  <FaRegUser />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/register">Register</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/login">Login</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/">Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav>
+
           </Navbar.Collapse>
         </Container>
       </Navbar>
