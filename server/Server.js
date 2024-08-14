@@ -1,8 +1,11 @@
 const express = require('express');
 require('dotenv').config();
-const { connectDb, blogPost } = require('./models/blogsDb');
+const { connectDb, blogPost, User } = require('./models/blogsDb');
 const cors = require('cors');
 const multer = require('multer')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const cookieparser = require('cookie-parser')
 
 const app = express();
 
@@ -10,11 +13,13 @@ connectDb();
 
 app.use(cors({
   origin: 'http://localhost:5173', // Adjust to match your frontend URL
+  credentials: true
 }));
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+app.use(cookieparser())
 
 
 const storage = multer.memoryStorage();
@@ -90,6 +95,54 @@ app.get('/blogs/view/:id', async(req, res) =>{
     
   }
 })
+
+
+////////register new user
+
+app.post('/register', async(req,res) =>{
+  const { username, email, password } = req.body;
+
+  const user = await User.findOne({email});
+  if (user) {
+    return res.json({message: "user with this email already exist"})
+  }
+
+  const hashedpassword = await bcrypt.hash(password, 12);
+
+  const newUser = new User({ username, email, password: hashedpassword });
+  try {
+    await newUser.save()
+    return res.json({message: "user registered successfully"})
+  } catch (error) {
+    return res.json(error)
+  }
+
+})
+
+/////login authentication
+
+app.post('/login', async(req, res) =>{
+
+  const { email, password } = req.body;
+  
+  const user = await User.findOne({email})
+  if (!user) {
+    return res.json({message: "User not registered"})
+  }
+  const validPassword = await bcrypt.compare(password, user.password)
+
+  if (!validPassword) {
+    return res.json({message: "Invalid password"})
+  }
+
+  const token = jwt.sign({ username: user.username }, process.env.TOKEN_KEY, {expiresIn: '1h'})
+  console.log('Generated Token:', token);
+  res.cookie('token', token, { maxAge: 360000, httpOnly: true });
+  return res.json({status: true, message: 'Successfully loged in'})
+  
+
+})
+
 
 const port = process.env.PORT;
 

@@ -20,6 +20,9 @@ function Register() {
       username,
       email,
       password,
+      }, {
+        
+      withCredentials: true
     });
     console.log(response);
     

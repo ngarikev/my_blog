@@ -1,6 +1,5 @@
-const mongoose  = require('mongoose');
-require('dotenv').config();
-
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const URI = process.env.MONGO_URI;
 
@@ -16,30 +15,55 @@ const connectDb = async () => {
   }
 };
 
-
+///blog schema
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   image: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
-})
+    default: Date.now,
+  },
+});
 
-const blogPost = mongoose.model('blogPost', blogSchema)
+const blogPost = mongoose.model("blogPost", blogSchema);
 
-module.exports= { connectDb, blogPost}
+const userSchema = new mongoose.Schema({
+  username: { 
+    type: String, 
+    required: true, 
+  },
+  email: { 
+    type: String, 
+    required: true, 
+  },
+  password: { 
+    type: String, 
+    required: true, 
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const User = mongoose.model("User", userSchema)
+
+module.exports = { 
+  connectDb, 
+  blogPost,
+  User
+ };

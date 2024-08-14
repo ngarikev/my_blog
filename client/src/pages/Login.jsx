@@ -15,7 +15,9 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:5000/login', {
         email,
-        password
+        password,
+      }, {
+        withCredentials: true
       })
       console.log(response);
       
