@@ -143,6 +143,12 @@ app.post('/login', async(req, res) =>{
 
 })
 
+/////logout authentication
+app.post('/logout', (req, res) =>{
+  res.clearCookie('token')
+  return res.json({status: true, message: 'Successfully logedout!'})
+})
+
 
 const port = process.env.PORT;
 
