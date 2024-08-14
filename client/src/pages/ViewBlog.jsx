@@ -4,6 +4,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { CiClock2 } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import TimeAgo from "react-timeago";
+import Header from "../components/Header";
 
 function ViewBlog() {
   const { id } = useParams();
@@ -37,6 +38,7 @@ function ViewBlog() {
   }
   return (
     <>
+    <Header />
       <Container className=" m-5">
         <div className="d-flex flex-column align-items-center view-blog py-3 rounded">
           <h1 className="text-center">{blog.title}</h1>

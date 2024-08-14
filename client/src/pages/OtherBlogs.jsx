@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import Blog from "../components/Blog";
 import axios from "axios";
+import Header from "../components/Header";
 
 function OtherBlogs() {
   const [blogs, setBlogs] = useState([]);
@@ -20,6 +21,7 @@ function OtherBlogs() {
   }, [])
   return (
     <>
+    <Header />
       <Container>
         <Row className="my-5">
           {blogs.length > 0 &&

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;700;800&family=Nosifer&family=Space+Mono:wght@400;700&display=swap');
 
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
  
@@ -101,6 +102,10 @@ width: 80%;
   .last-name{
     margin-top: 1rem !important;
   }
-
+}
+/*********dashboard********/
+.dashboard-background{
+  background-color: #e3e6f0;
+  height: 100vh;
   
 }
