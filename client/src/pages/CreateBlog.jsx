@@ -68,6 +68,8 @@ function CreateBlog() {
   
 
   return (
+    <>
+     <h1 className="text-dark text-center mt-5 display-6">Create your blog here!</h1>
     <Container className="create_form">
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
@@ -111,6 +113,8 @@ function CreateBlog() {
         </Button>
       </Form>
     </Container>
+    </>
+   
   );
 }
 

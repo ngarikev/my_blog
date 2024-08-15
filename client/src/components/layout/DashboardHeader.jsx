@@ -29,7 +29,7 @@ function DashboardHeader() {
           <Nav className="me-3">
             <Nav.Item>
               <Nav.Link as={Link} to="/" className="px-2 text-decoration-none text-white">
-                Home
+                Blogs
               </Nav.Link>
             </Nav.Item>
             {/* Add more Nav.Items as needed */}

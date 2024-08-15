@@ -10,6 +10,28 @@ import DashboardContent from "./components/DashboardContent";
 import CreateBlog from "./pages/CreateBlog";
 
 function App() {
+  const dashboardCards = [
+    {
+      title: "Blogs",
+      bgColor: "bg-warning",
+      link: "/"
+    },
+    {
+      title: "Users",
+      bgColor: "bg-info",
+      link: "create-blog"
+    },
+    {
+      title: "Create Blog",
+      bgColor: "bg-success",
+      link: "create-blog"
+    },
+    {
+      title: "Update blog",
+      bgColor: "bg-secondary",
+      link: "create-blog"
+    }
+    ];
   return (
     <>
       <Router>
@@ -20,7 +42,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Dashboard />}>
-            <Route path="" element={<DashboardContent />} />
+            <Route index element={<DashboardContent cards={dashboardCards} />} />
             <Route path="create-blog" element={<CreateBlog />} />
           </Route>
 
