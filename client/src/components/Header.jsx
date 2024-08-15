@@ -50,14 +50,6 @@ const Header = () => {
               </Link>
             </Nav>
             <Nav>
-              <Link
-                className="text-decoration-none m-3 nav_link"
-                to="/create-blog"
-              >
-                Create Blog
-              </Link>
-            </Nav>
-            <Nav>
               <Dropdown align="end">
                 <Dropdown.Toggle
                   variant="link"

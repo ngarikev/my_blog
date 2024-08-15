@@ -7,15 +7,12 @@ function DashboardSidebar() {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3  text-bg-dark"
-      style={{ width: "280px", height: "100%" }}
+      style={{ width: "230px", height: "100%" }}
     >
       <Navbar.Brand
         href="/"
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
-        <svg className="bi pe-none me-2" width="40" height="32">
-          <use xlinkHref="#bootstrap" />
-        </svg>
         <span className="fs-4">Admin Dashboard</span>
       </Navbar.Brand>
       <hr />
@@ -27,13 +24,14 @@ function DashboardSidebar() {
             aria-current="page"
           >
             <FaHome className="me-2" />
-            Home
+            Dashboard
           </Link>
         </Nav>
+        <br />
+        <hr />
         <Nav>
-          <Link to="" className="text-white text-decoration-none ms-3 mb-3">
-            <FaTachometerAlt className="me-2 " />
-            Dashboard
+          <Link className="text-decoration-none m-3" to="create-blog">
+            Create Blog
           </Link>
         </Nav>
       </Nav>
