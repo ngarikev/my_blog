@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Dashboard from "./components/Dashboard";
 import DashboardContent from "./components/DashboardContent";
 import CreateBlog from "./pages/CreateBlog";
+import UsersTable from "./components/UsersTable";
 
 function App() {
   const dashboardCards = [
@@ -19,7 +20,7 @@ function App() {
     {
       title: "Users",
       bgColor: "bg-info",
-      link: "create-blog"
+      link: "users"
     },
     {
       title: "Create Blog",
@@ -44,6 +45,7 @@ function App() {
           <Route path="/dashboard/*" element={<Dashboard />}>
             <Route index element={<DashboardContent cards={dashboardCards} />} />
             <Route path="create-blog" element={<CreateBlog />} />
+            <Route path="users" element={<UsersTable />} />
           </Route>
 
           <Route path="/view/:id" element={<ViewBlog />} />

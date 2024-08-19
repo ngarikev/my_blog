@@ -31,7 +31,17 @@ function DashboardSidebar() {
         <hr />
         <Nav>
           <Link className="text-decoration-none text-white m-3" to="create-blog">
+             Blogs
+          </Link>
+        </Nav>
+        <Nav>
+          <Link className="text-decoration-none text-white m-3" to="create-blog">
             Create Blog
+          </Link>
+        </Nav>
+        <Nav>
+          <Link className="text-decoration-none text-white m-3" to="users">
+            Users
           </Link>
         </Nav>
       </Nav>
