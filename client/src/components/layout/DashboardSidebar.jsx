@@ -1,6 +1,13 @@
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
-import { FaHome, FaTachometerAlt, FaTable, FaUsers } from "react-icons/fa";
+import {
+  FaHome,
+  FaTachometerAlt,
+  FaTable,
+  FaUsers,
+  FaBlog,
+} from "react-icons/fa";
+import { MdCreateNewFolder } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function DashboardSidebar() {
@@ -23,24 +30,33 @@ function DashboardSidebar() {
             className="active text-decoration-none text-white ms-3 mb-3"
             aria-current="page"
           >
-            <FaHome className="me-2" />
+            <FaTachometerAlt className="me-2" />
             Dashboard
           </Link>
         </Nav>
         <br />
         <hr />
         <Nav>
-          <Link className="text-decoration-none text-white m-3" to="create-blog">
-             Blogs
+          <Link
+            className="text-decoration-none text-white m-3"
+            to="create-blog"
+          >
+            <FaBlog className="me-2" />
+            Blogs
           </Link>
         </Nav>
         <Nav>
-          <Link className="text-decoration-none text-white m-3" to="create-blog">
+          <Link
+            className="text-decoration-none text-white m-3"
+            to="create-blog"
+          >
+            <MdCreateNewFolder className="me-2" />
             Create Blog
           </Link>
         </Nav>
         <Nav>
           <Link className="text-decoration-none text-white m-3" to="users">
+          <FaUsers className="me-2" />
             Users
           </Link>
         </Nav>

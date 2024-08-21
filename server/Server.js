@@ -99,7 +99,7 @@ app.get('/blogs/view/:id', async(req, res) =>{
 ////////gets users
 app.get('/dashboard/users', async(req,res) =>{
   try {
-    const users = await User.find({}, 'username email createdAt role')
+    const users = await User.find({}, 'username email createdAt role') .sort({createdAt: -1})
     res.status(200).json(users)
   } catch (error) {
     console.log(error)

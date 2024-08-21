@@ -4,9 +4,12 @@ import DataTable from "react-data-table-component";
 import { Button } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
+import { CSVLink } from "react-csv";
+import { FaPrint, FaFileCsv } from "react-icons/fa";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
+  const [filterUsers, setFilterUsers] = useState('')
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -22,6 +25,17 @@ function UsersTable() {
     };
     fetchUsers();
   }, []);
+
+  const userDetails = users.filter((detail) =>
+    detail.username.toLowerCase().includes(filterUsers.toLowerCase()) || 
+    detail.email.toLowerCase().includes(filterUsers.toLowerCase()) ||
+    detail.role.toLowerCase().includes(filterUsers.toLowerCase())
+  )
+
+  const handlePrint = () => {
+    window.print();
+  };
+
 
   const columns = [
     {
@@ -48,31 +62,57 @@ function UsersTable() {
       name: "",
       cell: (row) => (
         <div>
-          <Button className=" btn-primary btn-sm">
+          <Button className=" btn-edit btn-sm">
             <FaEdit />
           </Button>
-          <Button className=" btn-danger btn-sm" style={{ marginLeft: "10px" }}>
+          <Button className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
             <CiTrash />
           </Button>
         </div>
       ),
       ignoreRowClick: true,
-      allowOverflow: true,
-      button: true,
+      allowoverflow: true,
+      Button: true,
     },
   ];
 
   return (
     <div className="text-dark container my-5">
-      <DataTable
-        title="User Details"
-        columns={columns}
-        data={users}
-        pagination
-        fixedHeader
-        striped
-        highlightOnHover
-      />
+      <div className="d-flex justify-content-between align-items-center mb-3 me-2">
+        <input
+          type="text"
+          className="form-control w-25"
+          placeholder="Search..."
+          value={filterUsers}
+          onChange={(e) => setFilterUsers(e.target.value)}
+        />
+        <div>
+          <Button
+            onClick={handlePrint}
+            className="btn btn-secondary btn-sm me-2"
+          >
+            <FaPrint /> Print
+          </Button>
+          <CSVLink
+            data={users}
+            filename={"user_details.csv"}
+            className="btn btn-success btn-sm"
+          >
+            <FaFileCsv /> Download CSV
+          </CSVLink>
+        </div>
+      </div>
+      <div className="printOnly">
+        <DataTable
+          title="User Details"
+          columns={columns}
+          data={userDetails}
+          pagination
+          fixedHeader
+          striped
+          highlightOnHover
+        />
+      </div>
     </div>
   );
 }

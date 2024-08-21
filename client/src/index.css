@@ -118,7 +118,7 @@ width: 80%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-primary {
+.btn-edit {
   background-color: #007bff;
   border: none;
   color: white;
@@ -126,7 +126,7 @@ width: 80%;
   font-size: 12px;
 }
 
-.btn-danger {
+.btn-delete {
   background-color: #dc3545;
   border: none;
   color: white;
@@ -137,4 +137,19 @@ width: 80%;
 .btn-sm {
   font-size: 10px;
   padding: 3px 8px;
+}
+
+@media print {
+  body * {
+    visibility: hidden; /* Hide everything */
+  }
+  .printOnly, .printOnly * {
+    visibility: visible; /* Show only the table */
+  }
+  .printOnly {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
