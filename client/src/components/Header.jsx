@@ -55,6 +55,7 @@ const Header = () => {
                   variant="link"
                   id="user-dropdown"
                   className="nav-link text-decoration-none m-3"
+                  aria-label="User Options"
                 >
                   <FaRegUser />
                 </Dropdown.Toggle>

@@ -41,6 +41,8 @@ const blogSchema = new mongoose.Schema({
 
 const blogPost = mongoose.model("blogPost", blogSchema);
 
+
+///User schema
 const userSchema = new mongoose.Schema({
   username: { 
     type: String, 
