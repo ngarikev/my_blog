@@ -152,4 +152,7 @@ width: 80%;
     left: 0;
     width: 100%;
   }
+  .printOnly .rdt_Pagination {
+    display: none;
+  }
 }

@@ -96,6 +96,16 @@ app.get('/blogs/view/:id', async(req, res) =>{
   }
 })
 
+////////gets dashboard blogs
+app.get('/dashboard/blogs', async(req,res) =>{
+  try {
+    const blogs = await blogPost.find({}, '_id title category content createdAt image ') .sort({ createdAt: -1 })
+    res.status(200).json(blogs)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 ////////gets users
 app.get('/dashboard/users', async(req,res) =>{
   try {

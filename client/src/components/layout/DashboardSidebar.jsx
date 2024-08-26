@@ -39,7 +39,7 @@ function DashboardSidebar() {
         <Nav>
           <Link
             className="text-decoration-none text-white m-3"
-            to="create-blog"
+            to="blogs"
           >
             <FaBlog className="me-2" />
             Blogs

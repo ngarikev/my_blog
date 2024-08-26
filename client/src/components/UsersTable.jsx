@@ -2,10 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Button } from "react-bootstrap";
-import { FaEdit } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
 import { CSVLink } from "react-csv";
-import { FaPrint, FaFileCsv } from "react-icons/fa";
+import { FaPrint, FaFileCsv, FaEdit } from "react-icons/fa";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
@@ -108,6 +107,7 @@ function UsersTable() {
           columns={columns}
           data={userDetails}
           pagination
+          paginationPerPage={6}
           fixedHeader
           striped
           highlightOnHover
