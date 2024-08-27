@@ -5,10 +5,13 @@ import { Button } from "react-bootstrap";
 import { CiTrash } from "react-icons/ci";
 import { CSVLink } from "react-csv";
 import { FaPrint, FaFileCsv, FaEdit } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
-  const [filterUsers, setFilterUsers] = useState('')
+  const [filterUsers, setFilterUsers] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,16 +28,28 @@ function UsersTable() {
     fetchUsers();
   }, []);
 
-  const userDetails = users.filter((detail) =>
-    detail.username.toLowerCase().includes(filterUsers.toLowerCase()) || 
-    detail.email.toLowerCase().includes(filterUsers.toLowerCase()) ||
-    detail.role.toLowerCase().includes(filterUsers.toLowerCase())
-  )
+  const userDetails = users.filter(
+    (detail) =>
+      detail.username.toLowerCase().includes(filterUsers.toLowerCase()) ||
+      detail.email.toLowerCase().includes(filterUsers.toLowerCase()) ||
+      detail.role.toLowerCase().includes(filterUsers.toLowerCase())
+  );
 
   const handlePrint = () => {
     window.print();
   };
 
+  const handleAddUser = () => {
+    navigate('/dashboard/add-user')
+  }
+
+  const handleEdit = (id) => {
+    navigate(`/dashboard/users/update-user/${id}`)
+  }
+
+  const handleDelete = () => {
+    
+  }
 
   const columns = [
     {
@@ -61,10 +76,10 @@ function UsersTable() {
       name: "",
       cell: (row) => (
         <div>
-          <Button className=" btn-edit btn-sm">
+          <Button onClick={() => handleEdit(row._id)} className=" btn-edit btn-sm">
             <FaEdit />
           </Button>
-          <Button className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
+          <Button onClick={handleDelete} className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
             <CiTrash />
           </Button>
         </div>
@@ -76,9 +91,12 @@ function UsersTable() {
   ];
 
   return (
-    <div className="text-dark container my-5">
+    <div className="text-dark container mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3 me-2">
-        <input
+        <Button onClick={handleAddUser} className="btn btn-secondary me-2">
+         Add User
+      </Button>
+      <input
           type="text"
           className="form-control w-25"
           placeholder="Search..."

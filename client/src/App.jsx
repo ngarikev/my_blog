@@ -10,6 +10,9 @@ import DashboardContent from "./components/DashboardContent";
 import CreateBlog from "./pages/CreateBlog";
 import UsersTable from "./components/UsersTable";
 import BlogsTable from "./components/BlogsTable";
+import AddUser from "./components/AddUser";
+import EditBlog from "./components/EditBlog";
+import UpdateUser from "./components/UpdateUser";
 
 function App() {
   const dashboardCards = [
@@ -29,9 +32,9 @@ function App() {
       link: "create-blog"
     },
     {
-      title: "Update blog",
+      title: "Add User",
       bgColor: "bg-secondary",
-      link: "create-blog"
+      link: "add-user"
     }
     ];
   return (
@@ -48,6 +51,9 @@ function App() {
             <Route path="create-blog" element={<CreateBlog />} />
             <Route path="users" element={<UsersTable />} />
             <Route path="blogs" element={<BlogsTable />} />
+            <Route path="add-user" element={<AddUser />} />
+            <Route path="users/update-user/:id" element={<UpdateUser />} />
+            <Route path="edit-blog/:id" element={<EditBlog />} />
           </Route>
 
           <Route path="/view/:id" element={<ViewBlog />} />

@@ -3,7 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import {
   FaHome,
   FaTachometerAlt,
-  FaTable,
+  FaUserPlus,
   FaUsers,
   FaBlog,
 } from "react-icons/fa";
@@ -58,6 +58,12 @@ function DashboardSidebar() {
           <Link className="text-decoration-none text-white m-3" to="users">
           <FaUsers className="me-2" />
             Users
+          </Link>
+        </Nav>
+        <Nav>
+          <Link className="text-decoration-none text-white m-3" to="add-user">
+          <FaUserPlus className="me-2" />
+            Add User
           </Link>
         </Nav>
       </Nav>

@@ -4,10 +4,13 @@ import DataTable from "react-data-table-component";
 import { Button } from "react-bootstrap";
 import { CiTrash } from "react-icons/ci";
 import { FaEdit } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 
 function BlogsTable() {
   const [blogs, setBlogs] = useState([]);
   const [filterBlogs, setFilterBlogs] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -24,17 +27,26 @@ function BlogsTable() {
     fetchBlogs();
   }, []);
 
-  const blogData = blogs.filter((Data) =>
-    Data.category.toLowerCase().includes(filterBlogs.toLocaleLowerCase()) || 
-    Data.title.toLowerCase().includes(filterBlogs.toLocaleLowerCase())
-  )
+  const blogData = blogs.filter(
+    (Data) =>
+      Data.category.toLowerCase().includes(filterBlogs.toLocaleLowerCase()) ||
+      Data.title.toLowerCase().includes(filterBlogs.toLocaleLowerCase())
+  );
 
   // Function to remove HTML tags
-const stripHtml = (html) => {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  return div.textContent || div.innerText || "";
-};
+  const stripHtml = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
+  
+  const handleEdit = () => {
+    navigate(`/dashboard/edit-blog/${id}`)
+  }
+
+  const handleDelete = () => {
+    
+  }
 
   const columns = [
     {
@@ -45,22 +57,24 @@ const stripHtml = (html) => {
       name: "image",
       selector: (row) => row.image,
       cell: (row) => (
-        <img 
+        <img
           src={`data:image/png;base64,${row.image}`} // Adjust MIME type if necessary
-          
-          style={{ width: '50px', height: '50px', objectFit: 'cover' }} 
+          style={{ width: "50px", height: "50px", objectFit: "cover" }}
         />
       ),
     },
     {
       name: "Title",
-      selector: (row) => row.title.substring(0, 15) + (row.title.length > 15 ? "..." : "")
+      selector: (row) =>
+        row.title.substring(0, 15) + (row.title.length > 15 ? "..." : ""),
     },
     {
       name: "Text",
       selector: (row) => {
         const textContent = stripHtml(row.content);
-        return textContent.substring(0, 30) + (textContent.length > 30 ? "..." : "");
+        return (
+          textContent.substring(0, 30) + (textContent.length > 30 ? "..." : "")
+        );
       },
     },
     {
@@ -77,10 +91,10 @@ const stripHtml = (html) => {
       name: "",
       cell: (row) => (
         <div>
-          <Button className=" btn-edit btn-sm">
+          <Button onClick={handleEdit} className=" btn-edit btn-sm">
             <FaEdit />
           </Button>
-          <Button className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
+          <Button onClick={handleDelete} className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
             <CiTrash />
           </Button>
         </div>
@@ -102,17 +116,16 @@ const stripHtml = (html) => {
           onChange={(e) => setFilterBlogs(e.target.value)}
         />
       </div>
-        <DataTable
-          title="Blogs"
-          columns={columns}
-          data={blogData}
-          pagination
-          paginationPerPage={6}
-          fixedHeader
-          striped
-          highlightOnHover
-        />
-    
+      <DataTable
+        title="Blogs"
+        columns={columns}
+        data={blogData}
+        pagination
+        paginationPerPage={6}
+        fixedHeader
+        striped
+        highlightOnHover
+      />
     </div>
   );
 }
