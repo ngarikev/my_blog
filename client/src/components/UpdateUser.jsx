@@ -44,6 +44,7 @@ function UpdateUser() {
         email,
         role
       });
+      alert("User updated successfully")
       navigate('/dashboard/users')
     } catch (error) {
       console.log("Error updating user", error);

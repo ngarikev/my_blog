@@ -11,7 +11,7 @@ function UsersTable() {
   const [users, setUsers] = useState([]);
   const [filterUsers, setFilterUsers] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,16 +40,37 @@ function UsersTable() {
   };
 
   const handleAddUser = () => {
-    navigate('/dashboard/add-user')
-  }
+    navigate("/dashboard/add-user");
+  };
 
   const handleEdit = (id) => {
-    navigate(`/dashboard/users/update-user/${id}`)
-  }
+    navigate(`/dashboard/users/update-user/${id}`);
+  };
 
-  const handleDelete = () => {
-    
+const handleDelete = async (id) => {
+  const deleteUser = window.confirm("Are you sure you want to delete this user?");
+
+  if (deleteUser) {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/dashboard/users/${id}`,
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        alert(response.data.message);
+        setUsers(users.filter((user) => user._id !== id));
+        navigate("/dashboard/users");
+      } else {
+        alert("Failed to delete user");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete user");
+    }
   }
+};
+
 
   const columns = [
     {
@@ -76,10 +97,17 @@ function UsersTable() {
       name: "",
       cell: (row) => (
         <div>
-          <Button onClick={() => handleEdit(row._id)} className=" btn-edit btn-sm">
+          <Button
+            onClick={() => handleEdit(row._id)}
+            className=" btn-edit btn-sm"
+          >
             <FaEdit />
           </Button>
-          <Button onClick={handleDelete} className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
+          <Button
+            onClick={() => handleDelete(row._id)}
+            className=" btn-delete btn-sm"
+            style={{ marginLeft: "10px" }}
+          >
             <CiTrash />
           </Button>
         </div>
@@ -94,9 +122,9 @@ function UsersTable() {
     <div className="text-dark container mt-3">
       <div className="d-flex justify-content-between align-items-center mb-3 me-2">
         <Button onClick={handleAddUser} className="btn btn-secondary me-2">
-         Add User
-      </Button>
-      <input
+          Add User
+        </Button>
+        <input
           type="text"
           className="form-control w-25"
           placeholder="Search..."

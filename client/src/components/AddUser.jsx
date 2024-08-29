@@ -1,10 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import Axios  from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddUser() {
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  const navigate = useNavigate();
+
   const handleAddUser = async (e) => {
     e.preventDefault();
+
+    const username = `${fname} ${lname}`;
+
+    const newUser = {
+      username,
+      email,
+      password,
+      role
+    }
+
+    try {
+      const response = await Axios.post(
+        "http://localhost:5000/register",
+       newUser, { 
+          withCredentials: true 
+
+        });
+      alert("Successfully created a new user");
+      navigate("/dashboard/users");
+    } catch (error) {
+      alert(error);
+    }
   };
+
   return (
     <>
       <main>
@@ -61,9 +94,7 @@ function AddUser() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Select
-                onChange={(e) => setCategory(e.target.value)}
-              >
+              <Form.Select onChange={(e) => setRole(e.target.value)}>
                 <option value="">Select Role</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
