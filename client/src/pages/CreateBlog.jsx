@@ -43,6 +43,8 @@ function CreateBlog() {
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
+
+  const navigate = useNavigate()
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +63,7 @@ function CreateBlog() {
 
       console.log(BlogData);
       alert('submitted successfuly')
+      navigate('/dashboard/blogs')
     } catch (error) {
       console.log(error);
     }

@@ -102,6 +102,22 @@ app.get("/dashboard/blogs", async (req, res) => {
   }
 });
 
+////////gets dashboard blog
+
+app.get("/dashboard/blogs/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const blog = await blogPost.findById(id, "title category content image");
+    if (!blog) {
+      return res.status(404).json("Blog not found");
+    }
+    res.status(200).json(blog);
+  } catch (error) {
+    console.log(error);
+    // res.status(500).json({message: 'Error', error})
+  }
+});
 ////////gets users
 app.get("/dashboard/users", async (req, res) => {
   try {
@@ -127,6 +143,33 @@ app.get("/dashboard/users/:id", async (req, res) => {
   }
 });
 
+////////update blog
+app.put(
+  "/dashboard/blogs/edit-blog/:id",upload.single("image"),async (req, res) => {
+    const { id } = req.params;
+    const { title, category, content } = req.body;
+
+    // const imageBase64 = image.buffer.toString("base64");
+    const BlogData = { title, category, content };
+     if ( req.file ) {
+      BlogData.image = req.file.buffer.toString("base64");
+     }
+
+    try {
+      const updateBlog = await blogPost.findByIdAndUpdate(id, BlogData, {
+        new: true,
+        runValidators: true,
+      });
+      if (!updateBlog) {
+        return res.status(404).json({ message: "Blog not found" });
+      }
+      res.status(200).json({ Update: "Blog updated successfully", updateBlog });
+    } catch (error) {
+      res.status(500).json({ Update: "Blog failed to update", error });
+    }
+  }
+);
+
 ////////update user
 app.put("/dashboard/users/update-user/:id", async (req, res) => {
   const { id } = req.params;
@@ -145,21 +188,35 @@ app.put("/dashboard/users/update-user/:id", async (req, res) => {
     res.status(500).json(error);
   }
 });
+////////delete blog
+app.delete('/dashboard/blogs/:id', async(req, res) => {
+  const { id } = req.params;
+  try {
+    const blog = await blogPost.findByIdAndDelete(id);
+    if ( !blog) {
+      return res.status(404).json({ Warning: 'Blog not found'})
+    }
+    res.status(200).json({message: 'Successfully deleted blog'})
+  } catch (error) {
+    res.status(500).json({ Error: 'Failed to delete blog', Error: error.message})
+  }
+})
 
 ////////delete user
-app.delete('/dashboard/users/:id', async (req, res) => {
+app.delete("/dashboard/users/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findByIdAndDelete(id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ message: 'User deleted successfully' });
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete user', details: error.message });
+    res
+      .status(500)
+      .json({ error: "Failed to delete user", details: error.message });
   }
 });
-
 
 ////////register new user
 

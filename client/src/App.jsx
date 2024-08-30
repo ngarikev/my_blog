@@ -53,7 +53,7 @@ function App() {
             <Route path="blogs" element={<BlogsTable />} />
             <Route path="add-user" element={<AddUser />} />
             <Route path="users/update-user/:id" element={<UpdateUser />} />
-            <Route path="edit-blog/:id" element={<EditBlog />} />
+            <Route path="blogs/edit-blog/:id" element={<EditBlog />} />
           </Route>
 
           <Route path="/view/:id" element={<ViewBlog />} />

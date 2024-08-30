@@ -40,12 +40,27 @@ function BlogsTable() {
     return div.textContent || div.innerText || "";
   };
   
-  const handleEdit = () => {
-    navigate(`/dashboard/edit-blog/${id}`)
+  const handleEdit = (id) => {
+    navigate(`/dashboard/blogs/edit-blog/${id}`)
   }
 
-  const handleDelete = () => {
-    
+  const handleDelete = async(id) => {
+    const deleteBlog = window.confirm("Are you sure you want to delete this blog")
+
+    if( deleteBlog ) {
+      try {
+        const response = await axios.delete(`http://localhost:5000/dashboard/blogs/${id}`, { withCredentials: true })
+        if (response.status ===200) {
+          alert(response.data.message)
+          setBlogs(blogs.filter((blog) => blog._id !== id))
+        } else {
+          alert("Failed to delete this blog")
+        }
+      } catch (error) {
+        console.log(error)
+        alert("Failed")
+      }
+    }
   }
 
   const columns = [
@@ -91,10 +106,10 @@ function BlogsTable() {
       name: "",
       cell: (row) => (
         <div>
-          <Button onClick={handleEdit} className=" btn-edit btn-sm">
+          <Button onClick={() =>handleEdit(row._id)} className=" btn-edit btn-sm">
             <FaEdit />
           </Button>
-          <Button onClick={handleDelete} className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
+          <Button onClick={() =>handleDelete(row._id)} className=" btn-delete btn-sm" style={{ marginLeft: "10px" }}>
             <CiTrash />
           </Button>
         </div>
