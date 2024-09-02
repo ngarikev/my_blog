@@ -2,15 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { CiClock2 } from "react-icons/ci";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TimeAgo from "react-timeago";
 import Header from "../components/Header";
 
 function ViewBlog() {
   const { id } = useParams();
+  // const navigate = useNavigate();
+
   const [blog, setBlogs] = useState(null);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [user, setUser] = useState([])
+
+  
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -19,6 +24,8 @@ function ViewBlog() {
           `http://localhost:5000/blogs/view/${id}`
         );
         setBlogs(response.data);
+        setComments(response.data.comments);
+
       } catch (error) {}
     };
     fetchBlog();
@@ -27,13 +34,20 @@ function ViewBlog() {
     return <div>Loading...</div>;
   }
 
-  function submitComment(e) {
+  const submitComment = async (e) =>{
     e.preventDefault();
 
-    if (comment.trim()) {
-      setComments([...comments, comment]);
-      setComment("");
-      console.log("submitted", comment);
+    if (comment.trim() && user) {
+      try {
+        const response = await axios.post(`http://localhost:5000/blogs/comment/${id}`, {text: comment}, {withCredentials: true })
+        setComments(response.data.comments);
+        setComment("")
+      } catch (error) {
+        console.log("Failed to add comment", error)
+      }
+    } else {
+      console.log("User not logged in")
+      // navigate('/login')
     }
   }
   return (
@@ -50,7 +64,7 @@ function ViewBlog() {
           />
           <div
             dangerouslySetInnerHTML={{ __html: blog.content }}
-            className="text-center"
+            className="text-start lines"
           />
           <time className="ms-auto">
             <CiClock2 />
@@ -68,8 +82,8 @@ function ViewBlog() {
             <h6>Comments:</h6>
             {comments.map((comm, index) => (
               <div key={index}>
-                <h6>username</h6>
-                <p className="comment">{comm}</p>
+                <h6>{comm.postedBy.username}</h6>
+                <p className="comment">{comm.text}</p>
               </div>
             ))}
 
@@ -78,9 +92,10 @@ function ViewBlog() {
               cols={5}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              disabled={!user}
             ></Form.Control>
           </Form.Group>
-          <Button variant="primary btn" type="submit">
+          <Button variant="primary btn" type="submit" disabled={!user}>
             Comment
           </Button>
         </Form>

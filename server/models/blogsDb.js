@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 require("dotenv").config();
 
 const URI = process.env.MONGO_URI;
@@ -16,7 +17,7 @@ const connectDb = async () => {
 };
 
 ///blog schema
-const blogSchema = new mongoose.Schema({
+const blogSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -33,6 +34,25 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  postedBy: {
+    type: Schema.Types.ObjectId, 
+    ref: "User",
+  },
+ 
+  likes:[
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
+  comments: [
+    {
+      type: String,
+      created: {type: Date, default: Date.now},
+      postedBy: {type: Schema.Types.ObjectId, ref: "User"}
+    }
+  ],
+ 
   createdAt: {
     type: Date,
     default: Date.now,

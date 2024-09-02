@@ -118,7 +118,18 @@ app.get("/dashboard/blogs/:id", async (req, res) => {
     // res.status(500).json({message: 'Error', error})
   }
 });
-////////gets users
+////////gets dashboard users
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find().sort({
+      createdAt: -1,
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+  }
+})
+////////gets dashboard users
 app.get("/dashboard/users", async (req, res) => {
   try {
     const users = await User.find({}, "username email createdAt role").sort({
@@ -267,6 +278,48 @@ app.post("/logout", (req, res) => {
   res.clearCookie("token");
   return res.json({ status: true, message: "Successfully logedout!" });
 });
+
+
+const authenticateUser = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+
+// Like or unlike a blog
+app.put(`/blogs/like/:id`, authenticateUser, async(req,res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+  try {
+    const blog = await blogPost.findById(id);
+    if (!blog) {
+      return res.status(404).json({Msg: "Blog not found"})
+    }
+    const liked = blog.likes.includes(userId)
+    if(liked) {
+      blog.likes = blog.likes.filter(like => like.toString() !== userId.toString())
+    }else{
+      blog.likes.push(userId)
+    }
+    await blog.save()
+    res.status(200).json({ Msg: "Success", likes: blog.likes.length, liked: !liked })
+  } catch (error) {
+    res.status(500).json({ Error: "Error liking/unliking the blog", error: error.message})
+  }
+})
+
+
 
 const port = process.env.PORT;
 

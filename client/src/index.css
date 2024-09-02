@@ -79,6 +79,10 @@ width: 80%;
   border: 1px solid #FFD700;
 }
 
+.lines{
+  line-height: .5rem;
+}
+
 /*********login and register forms********/
 
 .login, .register{
@@ -101,6 +105,11 @@ width: 80%;
   }
   .last-name{
     margin-top: 1rem !important;
+  }
+  .lines{
+    line-height: 1rem;
+    padding: 5px;
+    font-size: small;
   }
 }
 /*********dashboard********/

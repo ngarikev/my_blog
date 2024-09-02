@@ -6,6 +6,7 @@ import Header from "../components/Header";
 
 function HomeScreen() {
   const [blogs, setBlogs] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -16,7 +17,20 @@ function HomeScreen() {
         console.log(error);
       }
     };
+
+
+    const fetchUser = async () => {
+      try {
+        const userResponse = await axios.get("http://localhost:5000/users");
+        setCurrentUser(userResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchBlog();
+    fetchUser();
+
   }, []);
   return (
     <>
@@ -24,8 +38,8 @@ function HomeScreen() {
     <Header />
        <Container >
         <Row className="my-5">
-          {blogs.length > 0 &&
-            blogs.map((blog) => <Blog key={blog._id} {...blog} />)}
+          {blogs.length > 0 && currentUser && 
+            blogs.map((blog) => <Blog key={blog._id} {...blog} user={currentUser} />)}
         </Row>
       </Container>
     </main>

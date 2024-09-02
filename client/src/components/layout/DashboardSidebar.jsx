@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import {
-  FaHome,
   FaTachometerAlt,
   FaUserPlus,
   FaUsers,
@@ -20,7 +19,7 @@ function DashboardSidebar() {
         href="/"
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
-        <span className="fs-4">Admin Dashboard</span>
+        <span className="fs-4">Blog Dashboard</span>
       </Navbar.Brand>
       <hr />
       <Nav className="nav-pills flex-column mb-auto mt-4">
