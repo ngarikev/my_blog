@@ -17,6 +17,13 @@ const connectDb = async () => {
 };
 
 ///blog schema
+
+const commentSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Store ObjectId, referencing User
+  createdAt: { type: Date, default: Date.now }
+});
+
 const blogSchema = new Schema({
   title: {
     type: String,
@@ -45,13 +52,7 @@ const blogSchema = new Schema({
       ref: "User",
     }
   ],
-  comments: [
-    {
-      type: String,
-      created: {type: Date, default: Date.now},
-      postedBy: {type: Schema.Types.ObjectId, ref: "User"}
-    }
-  ],
+  comments: [commentSchema],
  
   createdAt: {
     type: Date,

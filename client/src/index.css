@@ -53,6 +53,7 @@ body{
   cursor: pointer;
 }
 
+
 /**********create blog*********/
 
 .create_form{
@@ -71,6 +72,7 @@ width: 80%;
 /*******view page********/
 .view-blog{
   border: 1px solid #FFD700;
+  
 }
 .comment{
   font-size: 12px;
@@ -80,7 +82,7 @@ width: 80%;
 }
 
 .lines{
-  line-height: .5rem;
+  line-height: 1.rem !important;
 }
 
 /*********login and register forms********/
@@ -107,9 +109,8 @@ width: 80%;
     margin-top: 1rem !important;
   }
   .lines{
-    line-height: 1rem;
-    padding: 5px;
-    font-size: small;
+    line-height: 1.5rem;
+   
   }
 }
 /*********dashboard********/

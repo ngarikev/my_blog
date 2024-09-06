@@ -18,7 +18,6 @@ function HomeScreen() {
       }
     };
 
-
     const fetchUser = async () => {
       try {
         const userResponse = await axios.get("http://localhost:5000/users");
@@ -30,20 +29,21 @@ function HomeScreen() {
 
     fetchBlog();
     fetchUser();
-
   }, []);
   return (
     <>
-    <main>
-    <Header />
-       <Container >
-        <Row className="my-5">
-          {blogs.length > 0 && currentUser && 
-            blogs.map((blog) => <Blog key={blog._id} {...blog} user={currentUser} />)}
-        </Row>
-      </Container>
-    </main>
-     
+      <main>
+        <Header />
+        <Container>
+          <Row className="my-5">
+            {blogs.length > 0 &&
+              currentUser &&
+              blogs.map((blog) => (
+                <Blog key={blog._id} {...blog} user={currentUser} />
+              ))}
+          </Row>
+        </Container>
+      </main>
     </>
   );
 }

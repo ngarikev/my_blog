@@ -265,9 +265,8 @@ app.post("/login", async (req, res) => {
     return res.json({ message: "Invalid password" });
   }
 
-  const token = jwt.sign({ username: user.username }, process.env.TOKEN_KEY, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign({ _id: user._id, username: user.username }, process.env.TOKEN_KEY, { expiresIn: "1h" });
+
   console.log("Generated Token:", token);
   res.cookie("token", token, { maxAge: 360000, httpOnly: true });
   return res.json({ status: true, message: "Successfully loged in" });
@@ -279,7 +278,7 @@ app.post("/logout", (req, res) => {
   return res.json({ status: true, message: "Successfully logedout!" });
 });
 
-
+//authentication Middleware
 const authenticateUser = (req, res, next) => {
   const token = req.cookies.token;
 
@@ -289,7 +288,7 @@ const authenticateUser = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    req.user = decoded;
+    req.user = decoded; // Ensure this contains the user ID (_id)
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" });
@@ -298,27 +297,56 @@ const authenticateUser = (req, res, next) => {
 
 
 // Like or unlike a blog
-app.put(`/blogs/like/:id`, authenticateUser, async(req,res) => {
+app.put(`/blogs/like/:id`, authenticateUser, async (req, res) => {
   const { id } = req.params;
   const userId = req.user._id;
+  console.log("User ID:", userId); // Add this to debug
+
   try {
     const blog = await blogPost.findById(id);
     if (!blog) {
-      return res.status(404).json({Msg: "Blog not found"})
+      return res.status(404).json({ Msg: "Blog not found" });
     }
-    const liked = blog.likes.includes(userId)
-    if(liked) {
-      blog.likes = blog.likes.filter(like => like.toString() !== userId.toString())
-    }else{
-      blog.likes.push(userId)
+    const liked = blog.likes.includes(userId);
+    if (liked) {
+      blog.likes = blog.likes.filter(like => like.toString() !== userId.toString());
+    } else {
+      blog.likes.push(userId);
     }
-    await blog.save()
-    res.status(200).json({ Msg: "Success", likes: blog.likes.length, liked: !liked })
+    await blog.save();
+    res.status(200).json({ Msg: "Success", likes: blog.likes.length, liked: !liked });
   } catch (error) {
-    res.status(500).json({ Error: "Error liking/unliking the blog", error: error.message})
+    res.status(500).json({ Error: "Error liking/unliking the blog", error: error.message });
   }
-})
+});
 
+// Comment on a blog
+app.post('/blogs/view/comment/:id', authenticateUser, async (req, res) => {
+  const { id } = req.params;
+  const { text } = req.body;
+  const userId = req.user._id;
+  console.log("User ID:", userId); // Add this to debug
+  console.log("Comment Text:", text);
+
+  try {
+    const blog = await blogPost.findById(id);
+    if (!blog) {
+      return res.status(404).json({ Msg: "Blog not found" });
+    }
+    const newComment = { text, postedBy: userId };
+
+    blog.comments.push(newComment);
+
+    console.log("New Comment:", newComment);
+
+    await blog.save();
+
+    res.status(200).json({ Msg: "Comment added", blog });
+  } catch (error) {
+    console.error("Error adding comment:", error.message);
+    res.status(500).json({ Error: "Error adding blog", error: error.message });
+  }
+});
 
 
 const port = process.env.PORT;
