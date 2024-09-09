@@ -5,6 +5,7 @@ import { CiClock2 } from "react-icons/ci";
 import { useNavigate, useParams } from "react-router-dom";
 import TimeAgo from "react-timeago";
 import Header from "../components/Header";
+import { PacmanLoader } from "react-spinners";
 
 
 function ViewBlog() {
@@ -39,7 +40,7 @@ function ViewBlog() {
     fetchBlog();
   }, [id]);
   if (!blog) {
-    return <div>Loading...</div>;
+    return <div className="d-flex justify-content-center align-items-center vh-100"><PacmanLoader color="#FFD700" /></div>;
   }
 
   const submitComment = async (e) => {
