@@ -1,19 +1,23 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BlogsSreen from "./pages/BlogsScreen";
-import TechBlogs from "./pages/TechBlogs";
-import OtherBlogs from "./pages/OtherBlogs";
-import ViewBlog from "./pages/ViewBlog";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Dashboard from "./components/Dashboard";
-import DashboardContent from "./components/DashboardContent";
-import CreateBlog from "./pages/CreateBlog";
-import UsersTable from "./components/UsersTable";
-import BlogsTable from "./components/BlogsTable";
-import AddUser from "./components/AddUser";
-import EditBlog from "./components/EditBlog";
-import UpdateUser from "./components/UpdateUser";
-import { PacmanLoader } from "react-spinners";
+const BlogsScreen = lazy(() => import("./pages/BlogsScreen"));
+const TechBlogs = lazy(() => import("./pages/TechBlogs"))
+const OtherBlogs = lazy(() => import("./pages/OtherBlogs"))
+const ViewBlog = lazy(() => import("./pages/ViewBlog"))
+const Register = lazy(() => import("./pages/Register"))
+const Login = lazy(() => import("./pages/Login"))
+const Dashboard = lazy(() => import("./components/Dashboard"))
+const DashboardContent = lazy(() => import("./components/DashboardContent"))
+const CreateBlog = lazy(() => import("./pages/CreateBlog"))
+const UsersTable = lazy(() => import("./components/UsersTable"))
+const BlogsTable = lazy(() => import("./components/BlogsTable"))
+const AddUser = lazy(() => import("./components/AddUser"))
+const EditBlog = lazy(() => import("./components/EditBlog"))
+const UpdateUser = lazy(() => import("./components/UpdateUser"))
+
+
+
+import Loader from "./components/Loader";
 
 function App() {
   const dashboardCards = [
@@ -40,9 +44,10 @@ function App() {
   ];
   return (
     <>
-        <Router>
+      <Router>
+        <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/" element={<BlogsSreen />} />
+            <Route path="/" element={<BlogsScreen />} />
             <Route path="/tech" element={<TechBlogs />} />
             <Route path="/others" element={<OtherBlogs />} />
             <Route path="/register" element={<Register />} />
@@ -62,8 +67,8 @@ function App() {
 
             <Route path="/view/:id" element={<ViewBlog />} />
           </Routes>
-        </Router>
-    
+        </Suspense>
+      </Router>
     </>
   );
 }

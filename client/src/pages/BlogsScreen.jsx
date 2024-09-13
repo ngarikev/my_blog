@@ -3,6 +3,7 @@ import Blog from "../components/Blog";
 import axios from "axios";
 import { Container, Row } from "react-bootstrap";
 import Header from "../components/Header";
+import Loader from "../components/Loader";
 
 function HomeScreen() {
   const [blogs, setBlogs] = useState([]);
@@ -30,6 +31,7 @@ function HomeScreen() {
     fetchBlog();
     fetchUser();
   }, []);
+  
   return (
     <>
       <main>
