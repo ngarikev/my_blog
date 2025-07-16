@@ -12,7 +12,7 @@ connectDb();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust to match your frontend URL
+    origin: "https://my-blog-coral-rho.vercel.app/", // Adjust to match your frontend URL
     credentials: true,
   })
 );

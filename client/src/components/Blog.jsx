@@ -19,6 +19,8 @@ function Blog({ _id, title, content, image, createdAt, likes, user, comments }) 
 
   const navigate = useNavigate()
 
+  const baseURL = import.meta.env.VITE_API_URL;
+
   const handleLike = async() => {
 
     if (!user) {
@@ -27,7 +29,7 @@ function Blog({ _id, title, content, image, createdAt, likes, user, comments }) 
     }
 
     try {
-      const response = await axios.put(`http://localhost:5000/blogs/like/${_id}`, {}, { withCredentials: true });
+      const response = await axios.put(`baseURL/blogs/like/${_id}`, {}, { withCredentials: true });
       setLikeCount(response.data.likes)
       setLiked(response.data.liked)
 
