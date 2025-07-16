@@ -7,6 +7,7 @@ import TimeAgo from "react-timeago";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 
+const baseURL = import.meta.env.VITE_API_URL;
 
 function ViewBlog() {
   const { id } = useParams();
@@ -18,17 +19,19 @@ function ViewBlog() {
   const [user, setUser] = useState([]);
   const [users, setUsers] = useState({});
 
+  
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/blogs/view/${id}`
+          `${baseURL}/blogs/view/${id}`
         );
         setBlogs(response.data);
         setComments(response.data.comments || []);
 
         // Fetch users to map user IDs to usernames
-        const usersResponse = await axios.get('http://localhost:5000/users');
+        const usersResponse = await axios.get(`${baseURL}/users`);
         const usersMap = {};
         usersResponse.data.forEach(user => {
           usersMap[user._id] = user.username;
@@ -49,7 +52,7 @@ function ViewBlog() {
     if (comment.trim() && user) {
       try {
         const response = await axios.post(
-          `http://localhost:5000/blogs/view/comment/${id}`,
+          `${baseURL}/blogs/view/comment/${id}`,
           { text: comment },
           { withCredentials: true }
         );

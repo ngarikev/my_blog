@@ -5,6 +5,8 @@ import { Container, Row } from "react-bootstrap";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function HomeScreen() {
   const [blogs, setBlogs] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -12,7 +14,7 @@ function HomeScreen() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/blogs");
+        const response = await axios.get(`${baseURL}/blogs`);
         setBlogs(response.data);
       } catch (error) {
         console.log(error);
@@ -21,7 +23,7 @@ function HomeScreen() {
 
     const fetchUser = async () => {
       try {
-        const userResponse = await axios.get("http://localhost:5000/users");
+        const userResponse = await axios.get(`${baseURL}/users`);
         setCurrentUser(userResponse.data);
       } catch (error) {
         console.log(error);

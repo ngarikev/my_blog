@@ -23,13 +23,15 @@ function Blog({ _id, title, content, image, createdAt, likes, user, comments }) 
 
   const handleLike = async() => {
 
+    
+
     if (!user) {
       navigate('/login')
       return;
     }
 
     try {
-      const response = await axios.put(`baseURL/blogs/like/${_id}`, {}, { withCredentials: true });
+      const response = await axios.put(`${baseURL}/blogs/like/${_id}`, {}, { withCredentials: true });
       setLikeCount(response.data.likes)
       setLiked(response.data.liked)
 

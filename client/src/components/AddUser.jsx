@@ -3,6 +3,8 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Axios  from "axios";
 import { useNavigate } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function AddUser() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -11,6 +13,7 @@ function AddUser() {
   const [role, setRole] = useState("");
 
   const navigate = useNavigate();
+
 
   const handleAddUser = async (e) => {
     e.preventDefault();
