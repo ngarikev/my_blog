@@ -12,7 +12,7 @@ connectDb();
 
 app.use(
   cors({
-    origin: "https://my-blog-coral-rho.vercel.app/", // Adjust to match your frontend URL
+    origin: "https://my-blog-coral-rho.vercel.app", // Adjust to match your frontend URL
     credentials: true,
   })
 );
