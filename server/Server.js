@@ -1,5 +1,4 @@
 const express = require("express");
-require("dotenv").config();
 const { connectDb, blogPost, User } = require("./models/blogsDb");
 const cors = require("cors");
 const multer = require("multer");
