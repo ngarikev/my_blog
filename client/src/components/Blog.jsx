@@ -23,8 +23,6 @@ function Blog({ _id, title, content, image, createdAt, likes, user, comments }) 
 
   const handleLike = async() => {
 
-    
-
     if (!user) {
       navigate('/login')
       return;

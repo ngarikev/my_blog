@@ -41,7 +41,6 @@ function HomeScreen() {
         <Container>
           <Row className="my-5">
             {blogs.length > 0 &&
-              currentUser &&
               blogs.map((blog) => (
                 <Blog key={blog._id} {...blog} user={currentUser} />
               ))}
