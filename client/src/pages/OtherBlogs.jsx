@@ -26,8 +26,12 @@ function OtherBlogs() {
     <Header />
       <Container>
         <Row className="my-5">
-          {blogs.length > 0 &&
-            blogs.map((blog) => <Blog key={blog._id} {...blog} />)}
+          {blogs.length > 0 ? (
+            blogs.map((blog) => <Blog key={blog._id} {...blog} />)
+          ) : (
+            <p>No blog found on this page</p>
+          )}
+            
         </Row>
       </Container>
     </>
