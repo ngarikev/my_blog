@@ -13,6 +13,7 @@ function BlogsTable() {
   const [filterBlogs, setFilterBlogs] = useState("");
   const { id } = useParams();
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -24,6 +25,8 @@ function BlogsTable() {
         setBlogs(response.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false)
       }
     };
     fetchBlogs();
@@ -142,6 +145,7 @@ function BlogsTable() {
         fixedHeader
         striped
         highlightOnHover
+        progressPending={loading}
       />
     </div>
   );
