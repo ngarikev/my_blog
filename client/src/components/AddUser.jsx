@@ -28,8 +28,7 @@ function AddUser() {
     }
 
     try {
-      const response = await Axios.post(
-        "http://localhost:5000/register",
+      const response = await Axios.post(`${baseURL}/register`,
        newUser, { 
           withCredentials: true 
 

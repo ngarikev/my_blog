@@ -5,6 +5,8 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const modules = {
   toolbar: [
     ["bold", "italic", "underline", "strike"],
@@ -52,7 +54,7 @@ function EditBlog() {
     const fetchBlogDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/dashboard/blogs/${id}`,
+          `${baseURL}/dashboard/blogs/${id}`,
           { withCredentials: true }
         );
         const { title, image, category, content } = response.data;
@@ -80,7 +82,7 @@ function EditBlog() {
 
     try {
       await axios.put(
-        `http://localhost:5000/dashboard/blogs/edit-blog/${id}`,
+        `${baseURL}/dashboard/blogs/edit-blog/${id}`,
         BlogData,
         {
           headers: {

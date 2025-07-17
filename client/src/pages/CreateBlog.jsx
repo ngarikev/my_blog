@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
+
+const baseURL = import.meta.env.VITE_API_URL;
 
 const modules = {
   toolbar: [
@@ -55,7 +57,7 @@ function CreateBlog() {
     BlogData.append("content", content);
 
     try {
-      await axios.post("http://localhost:5000/create-blog", BlogData, {
+      await axios.post(`${baseURL}/create-blog`, BlogData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

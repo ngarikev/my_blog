@@ -4,13 +4,15 @@ import { Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Header from '../components/Header';
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function TechBlogs() {
  const [blogs, setBlogs] = useState([])
   
 useEffect(() =>{
   const fetchTechBlog = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/blogs/tech");
+      const response = await axios.get(`${baseURL}/blogs/tech`);
       setBlogs(response.data)
     } catch (error) {
       console.log(error);

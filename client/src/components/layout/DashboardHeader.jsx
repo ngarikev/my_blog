@@ -4,6 +4,8 @@ import { Container, Row, Col, Nav, Form, Button, Dropdown } from "react-bootstra
 import { FaRegUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function DashboardHeader() {
 
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ function DashboardHeader() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/logout",
+        `${baseURL}/logout`,
         {},
         { withCredentials: true }
       );

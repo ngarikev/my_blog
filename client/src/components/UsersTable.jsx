@@ -7,22 +7,27 @@ import { CSVLink } from "react-csv";
 import { FaPrint, FaFileCsv, FaEdit } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function UsersTable() {
   const [users, setUsers] = useState([]);
   const [filterUsers, setFilterUsers] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/dashboard/users",
+          `${baseURL}/dashboard/users`,
           { withCredentials: true }
         );
         setUsers(response.data);
       } catch (error) {
-        console.log("error");
+        console.error("Failed to fetch users:", error);
+      }finally {
+      setLoading(false);
       }
     };
     fetchUsers();
@@ -53,7 +58,7 @@ const handleDelete = async (id) => {
   if (deleteUser) {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/dashboard/users/${id}`,
+        `${baseURL}/dashboard/users/${id}`,
         { withCredentials: true }
       );
 
@@ -113,10 +118,17 @@ const handleDelete = async (id) => {
         </div>
       ),
       ignoreRowClick: true,
-      allowoverflow: true,
-      Button: true,
+      allowOverflow: true,
+      button: true,
     },
   ];
+
+  const csvHeaders = [
+  { label: "Username", key: "username" },
+  { label: "Email", key: "email" },
+  { label: "Date Created", key: "createdAt" },
+  { label: "Role", key: "role" },
+];
 
   return (
     <div className="text-dark container mt-3">
@@ -140,6 +152,7 @@ const handleDelete = async (id) => {
           </Button>
           <CSVLink
             data={users}
+            headers={csvHeaders}
             filename={"user_details.csv"}
             className="btn btn-success btn-sm"
           >
@@ -157,6 +170,7 @@ const handleDelete = async (id) => {
           fixedHeader
           striped
           highlightOnHover
+          progressPending={loading}
         />
       </div>
     </div>

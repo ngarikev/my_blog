@@ -4,13 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/logout",
+        `${baseURL}/logout`,
         {},
         { withCredentials: true }
       );

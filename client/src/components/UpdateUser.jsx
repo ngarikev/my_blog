@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function UpdateUser() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -16,7 +18,7 @@ function UpdateUser() {
   useEffect(() => {
     const fetchUserDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/dashboard/users/${id}`);
+        const response = await axios.get(`${baseURL}/dashboard/users/${id}`);
 
         const { username, email, role } = response.data;
 
@@ -39,7 +41,7 @@ function UpdateUser() {
     e.preventDefault();
     const username = `${fname} ${lname}`
     try {
-      await axios.put(`http://localhost:5000/dashboard/users/update-user/${id}`, {
+      await axios.put(`${baseURL}/dashboard/users/update-user/${id}`, {
         username,
         email,
         role

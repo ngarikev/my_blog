@@ -6,6 +6,8 @@ import { CiTrash } from "react-icons/ci";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function BlogsTable() {
   const [blogs, setBlogs] = useState([]);
   const [filterBlogs, setFilterBlogs] = useState("");
@@ -16,7 +18,7 @@ function BlogsTable() {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/dashboard/blogs",
+          `${baseURL}/dashboard/blogs`,
           { withCredentials: true }
         );
         setBlogs(response.data);
@@ -49,7 +51,7 @@ function BlogsTable() {
 
     if( deleteBlog ) {
       try {
-        const response = await axios.delete(`http://localhost:5000/dashboard/blogs/${id}`, { withCredentials: true })
+        const response = await axios.delete(`${baseURL}/dashboard/blogs/${id}`, { withCredentials: true })
         if (response.status ===200) {
           alert(response.data.message)
           setBlogs(blogs.filter((blog) => blog._id !== id))
@@ -115,8 +117,8 @@ function BlogsTable() {
         </div>
       ),
       ignoreRowClick: true,
-      allowoverflow: true,
-      Button: true,
+      allowOverflow: true,
+      button: true,
     },
   ];
 

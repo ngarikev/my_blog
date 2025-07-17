@@ -4,13 +4,15 @@ import Blog from "../components/Blog";
 import axios from "axios";
 import Header from "../components/Header";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 function OtherBlogs() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(()=>{
     const fetchOtherBlog = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/blogs/others");
+        const response = await axios.get(`${baseURL}/others`);
         setBlogs(response.data)
       } catch (error) {
         console.log(error);
