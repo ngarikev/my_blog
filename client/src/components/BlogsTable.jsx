@@ -78,7 +78,7 @@ function BlogsTable() {
       selector: (row) => row.image,
       cell: (row) => (
         <img
-          src={`data:image/webp;base64,${row.image}`} // Adjust MIME type if necessary
+          src={`data:${row.imageType || "image/webp"};base64,${row.image}`} 
           style={{ width: "50px", height: "50px", objectFit: "cover" }}
         />
       ),

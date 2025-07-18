@@ -45,7 +45,7 @@ function Blog({ _id, title, content, image, createdAt, likes, user, comments }) 
         <Link className="text-decoration-none" to={`/view/${_id}`} >
         <img
             className="img-fluid"
-            src={`data:image/webp;base64,${image}`}
+            src={`data:${row.imageType || "image/webp"};base64,${image}`}
             alt="title"
           />
         </Link>

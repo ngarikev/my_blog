@@ -75,6 +75,7 @@ app.post("/create-blog", upload.single("image"), async (req, res) => {
       category,
       content,
       image: base64Image, 
+      imageType: "image/webp",
     });
 
     await newBlog.save();

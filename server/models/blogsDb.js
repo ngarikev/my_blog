@@ -34,6 +34,10 @@ const blogSchema = new Schema({
     type: String,
     required: true,
   },
+  imageType: {
+  type: String,
+  default: "image/webp"  // optional but useful
+  },
   category: {
     type: String,
     required: true,
