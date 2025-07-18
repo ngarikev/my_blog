@@ -2,6 +2,7 @@ const express = require("express");
 const { connectDb, blogPost, User } = require("./models/blogsDb");
 const cors = require("cors");
 const multer = require("multer");
+const sharp = require("sharp");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const cookieparser = require("cookie-parser");
@@ -29,28 +30,62 @@ app.get("/", (req, res) => {
 });
 
 /////////creates a new blog
+// app.post("/create-blog", upload.single("image"), async (req, res) => {
+//   console.log("Request received to /create-blog");
+
+//   const { title, category, content } = req.body;
+//   const image = req.file;
+
+//   if (!image) {
+//     throw new Error("Image file is missing");
+//   }
+
+//   const imageBase64 = image.buffer.toString("base64");
+//   const BlogData = { title, category, content, image: imageBase64 };
+
+//   const newBlog = new blogPost(BlogData);
+
+//   try {
+//     await newBlog.save();
+//     res.status(200).send("ok");
+//   } catch (error) {
+//     res.status(404).send(error);
+//   }
+// });
+
 app.post("/create-blog", upload.single("image"), async (req, res) => {
-  console.log("Request received to /create-blog");
-
   const { title, category, content } = req.body;
-  const image = req.file;
 
-  if (!image) {
-    throw new Error("Image file is missing");
+  if (!req.file) {
+    return res.status(400).json({ error: "Image file is missing" });
   }
-
-  const imageBase64 = image.buffer.toString("base64");
-  const BlogData = { title, category, content, image: imageBase64 };
-
-  const newBlog = new blogPost(BlogData);
 
   try {
+    // Convert image to webp format
+    const webpBuffer = await sharp(req.file.buffer)
+      .webp({ quality: 80 }) // quality between 1-100
+      .toBuffer();
+
+    // Convert buffer to base64
+    const base64Image = webpBuffer.toString("base64");
+
+    // Save blog with base64 image
+    const newBlog = new blogPost({
+      title,
+      category,
+      content,
+      image: base64Image, 
+    });
+
     await newBlog.save();
-    res.status(200).send("ok");
+
+    res.status(200).json({ message: "Blog created", newBlog });
   } catch (error) {
-    res.status(404).send(error);
+    console.error("Blog creation failed:", error);
+    res.status(500).json({ error: "Failed to create blog" });
   }
 });
+
 
 ///////get all blogs
 app.get("/blogs", async (req, res) => {
